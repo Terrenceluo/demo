@@ -24,9 +24,12 @@ class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
 
 
-class UserDetail(generics.RetrieveAPIView):
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def update(self, request, *args, **kwargs):
+        return super(UserDetail, self).update(request, writable=True, *args, **kwargs)
 
 
 class GroupList(generics.ListAPIView):
@@ -34,6 +37,7 @@ class GroupList(generics.ListAPIView):
     serializer_class = GroupSerializer
 
 
-class GroupDetail(generics.RetrieveAPIView):
+class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
